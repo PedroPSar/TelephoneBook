@@ -2,4 +2,9 @@
     <string name="app_name">Telephone Book</string>
     <string name="btn_add_title">Add a new contact</string>
     <string name="btn_search_title">Search</string>
+
+    <string name="toast_text_insert_contact">Contact inserted successfully</string>
+    <string name="toast_text_delete_contact">Contact deleted successfully</string>
+    <string name="toast_text_update_contact">Contact edited successfully</string>
+    <string name="toast_text_update_error">An error occurred while updating the contact</string>
 </resources>

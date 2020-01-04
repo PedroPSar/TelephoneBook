@@ -2,11 +2,20 @@ package com.pedro.telephonebook.Models;
 
 public class Contact {
 
+    private int _id;
     private String avatar;
     private String name;
     private String nickname;
     private String tel;
     private String email;
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
 
     public String getAvatar() {
         return avatar;
