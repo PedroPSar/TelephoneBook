@@ -6,4 +6,174 @@
     android:layout_height="match_parent"
     tools:context=".AddContactActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_add_contact"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:titleTextColor="@android:color/white"
+        app:title="@string/add_cont_title"
+        app:titleMarginStart="@dimen/title_margin_start"
+        app:logo="@drawable/ic_close_24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const_l"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_add_contact"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_contact"
+            android:layout_width="@dimen/circle_image_add_contact"
+            android:layout_height="@dimen/circle_image_add_contact"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/default_contact"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/img_photo_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_photo_camera_24dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearL_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/const_l">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ic_margin_start"
+            android:layout_marginEnd="@dimen/ic_margin_end"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_person_24dp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_txt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_name"
+            android:layout_marginEnd="@dimen/edit_txt_add_margin_end" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearL_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearL_name">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_nickname"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/ic_margin_start"
+            android:layout_marginEnd="@dimen/ic_margin_end"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@null"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_txt_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_nickname"
+            android:layout_marginEnd="@dimen/edit_txt_add_margin_end" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearL_tel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearL_nickname">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ic_margin_start"
+            android:layout_marginEnd="@dimen/ic_margin_end"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_phone_24dp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_txt_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_tel"
+            android:layout_marginEnd="@dimen/edit_txt_add_margin_end" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearL_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearL_tel">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ic_margin_start"
+            android:layout_marginEnd="@dimen/ic_margin_end"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_email_black_24dp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_txt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_tel"
+            android:layout_marginEnd="@dimen/edit_txt_add_margin_end" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

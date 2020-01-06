@@ -7,4 +7,10 @@
     <string name="toast_text_delete_contact">Contact deleted successfully</string>
     <string name="toast_text_update_contact">Contact edited successfully</string>
     <string name="toast_text_update_error">An error occurred while updating the contact</string>
+    <string name="add_cont_title">New contact</string>
+    <string name="hint_name">Name</string>
+    <string name="img_photo_description">Add a photo</string>
+    <string name="btn_save_text">Save</string>
+    <string name="hint_nickname">Nickname</string>
+    <string name="hint_tel">Phone</string>
 </resources>
