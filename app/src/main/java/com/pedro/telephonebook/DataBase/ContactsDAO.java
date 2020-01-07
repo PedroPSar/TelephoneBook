@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.pedro.telephonebook.Models.Contact;
@@ -61,6 +62,43 @@ public class ContactsDAO {
             db.update(DataBaseHelper.TABLE_NAME, values, DataBaseHelper.COLUMN_NAME + " = ?", new String[]{"" + contact.getName()});
             Toast.makeText(context, context.getString(R.string.toast_text_update_contact), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public List<Contact> loadContacts(){
+        List<Contact> contactList = new ArrayList<>();
+
+        Cursor cursor = db.query(DataBaseHelper.TABLE_NAME, null, null,
+                null, null, null, DataBaseHelper.COLUMN_NAME + " DESC");
+
+        try{
+
+            if(cursor.getCount() > 0){
+                cursor.moveToFirst();
+
+                do{
+
+                    Contact contact = new Contact();
+                    contact.set_id(cursor.getInt(0));
+                    contact.setAvatar(cursor.getString(1));
+                    contact.setName(cursor.getString(2));
+                    contact.setNickname(cursor.getString(3));
+                    contact.setTel(cursor.getString(4));
+                    contact.setEmail(cursor.getString(5));
+
+                    contactList.add(contact);
+
+                }while (cursor.moveToNext());
+            }
+
+        } catch (Exception e){
+            Toast.makeText(context, context.getString(R.string.toast_text_load_error), Toast.LENGTH_SHORT).show();
+        } finally {
+            if(cursor != null){
+                cursor.close();
+            }
+        }
+
+        return contactList;
     }
 
     public List<Contact> queryContact(String query){

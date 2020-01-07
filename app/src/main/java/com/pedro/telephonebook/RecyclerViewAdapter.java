@@ -1,6 +1,8 @@
 package com.pedro.telephonebook;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.pedro.telephonebook.Models.Contact;
 
 
+import java.io.File;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -38,7 +41,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Glide.with(context).asBitmap().load(contacts.get(position).getAvatar()).into(holder.avatar);
+        //Glide.with(context).load(contacts.get(position).getAvatar())
+                //.into(holder.avatar);
+        holder.avatar.setImageURI(Uri.parse(contacts.get(position).getAvatar()));
 
         holder.txtName.setText(contacts.get(position).getName());
         holder.txtNickName.setText(contacts.get(position).getNickname());

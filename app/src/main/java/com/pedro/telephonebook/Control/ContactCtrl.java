@@ -1,7 +1,6 @@
 package com.pedro.telephonebook.Control;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
