@@ -3,14 +3,20 @@
     <string name="btn_add_title">Add a new contact</string>
     <string name="btn_search_title">Search</string>
 
+    <!-- Class Dao -->
     <string name="toast_text_insert_contact">Contact inserted successfully</string>
     <string name="toast_text_delete_contact">Contact deleted successfully</string>
     <string name="toast_text_update_contact">Contact edited successfully</string>
     <string name="toast_text_update_error">An error occurred while updating the contact</string>
+    
+    
+    <!-- Add Contact Activity -->
     <string name="add_cont_title">New contact</string>
     <string name="hint_name">Name</string>
     <string name="img_photo_description">Add a photo</string>
     <string name="btn_save_text">Save</string>
     <string name="hint_nickname">Nickname</string>
     <string name="hint_tel">Phone</string>
+    <string name="hint_email">Email</string>
+
 </resources>

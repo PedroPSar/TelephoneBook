@@ -44,7 +44,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/btnAddImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -171,7 +171,7 @@
             android:id="@+id/edit_txt_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_tel"
+            android:hint="@string/hint_email"
             android:layout_marginEnd="@dimen/edit_txt_add_margin_end" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
