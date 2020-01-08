@@ -10,6 +10,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
 
     public static final String TABLE_NAME = "contacts_table";
+    public static final String COLUMN_ID = "_id";
     public static final String COLUMN_AVATAR = "avatar";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_NICKNAME = "nickname";

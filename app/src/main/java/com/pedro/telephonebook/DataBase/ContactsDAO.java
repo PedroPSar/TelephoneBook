@@ -66,9 +66,11 @@ public class ContactsDAO {
 
     public List<Contact> loadContacts(){
         List<Contact> contactList = new ArrayList<>();
+        String[]columns = new String[]{DataBaseHelper.COLUMN_ID, DataBaseHelper.COLUMN_AVATAR,
+        DataBaseHelper.COLUMN_NAME, DataBaseHelper.COLUMN_NICKNAME, DataBaseHelper.COLUMN_TEL, DataBaseHelper.COLUMN_EMAIL};
 
-        Cursor cursor = db.query(DataBaseHelper.TABLE_NAME, null, null,
-                null, null, null, DataBaseHelper.COLUMN_NAME + " DESC");
+        Cursor cursor = db.query(DataBaseHelper.TABLE_NAME, columns, null,
+                null, null, null, DataBaseHelper.COLUMN_NAME + " ASC");
 
         try{
 

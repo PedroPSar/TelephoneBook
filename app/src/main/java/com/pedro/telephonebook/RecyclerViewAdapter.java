@@ -11,11 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.pedro.telephonebook.Models.Contact;
 
-
-import java.io.File;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -24,6 +21,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private List<Contact> contacts;
     private Context context;
+    public static final String TEST =  "debugando_img";
 
     public RecyclerViewAdapter(List<Contact> contacts, Context context){
         this.contacts = contacts;
@@ -43,6 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         //Glide.with(context).load(contacts.get(position).getAvatar())
                 //.into(holder.avatar);
+        Log.d(TEST, "uri: " + contacts.get(position).getAvatar());
         holder.avatar.setImageURI(Uri.parse(contacts.get(position).getAvatar()));
 
         holder.txtName.setText(contacts.get(position).getName());
