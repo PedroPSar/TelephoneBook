@@ -19,4 +19,10 @@
     <string name="hint_tel">Phone</string>
     <string name="hint_email">Email</string>
 
+    <!-- recyclerView Layout -->
+    <string name="label_name">Name: </string>
+    <string name="label_nickname">Nickname: </string>
+    <string name="label_tel">Telephone: </string>
+    <string name="label_email">Email: </string>
+
 </resources>
