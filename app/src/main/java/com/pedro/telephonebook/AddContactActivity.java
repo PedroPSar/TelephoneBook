@@ -4,13 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,17 +23,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddContactActivity extends AppCompatActivity {
 
-    ContactCtrl contactCtrl;
+    private ContactCtrl contactCtrl;
 
-    Toolbar toolbar;
-    CircleImageView circleImg;
-    AppCompatEditText editTextName;
-    AppCompatEditText editTextNickName;
-    AppCompatEditText editTextTel;
-    AppCompatEditText editTextEmail;
-    ImageView btnAddImg;
+    private Toolbar toolbar;
+    private CircleImageView circleImg;
+    private AppCompatEditText editTextName;
+    private AppCompatEditText editTextNickName;
+    private AppCompatEditText editTextTel;
+    private AppCompatEditText editTextEmail;
+    private ImageView btnAddImg;
 
-    static final int GET_IMAGE = 1;
+    private static final int GET_IMAGE = 1;
     private Uri filePath;
 
     @Override

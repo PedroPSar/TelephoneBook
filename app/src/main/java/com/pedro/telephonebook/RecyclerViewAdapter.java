@@ -1,5 +1,6 @@
 package com.pedro.telephonebook;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.text.Spannable;
 import android.text.method.MovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,11 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pedro.telephonebook.Control.ContactCtrl;
 import com.pedro.telephonebook.Models.Contact;
-
-import java.io.File;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -63,23 +65,37 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return contacts.size();
     }
 
-    protected class ViewHolder extends RecyclerView.ViewHolder{
+    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
 
+        CardView parent;
         CircleImageView avatar;
         TextView txtName;
         TextView txtNickName;
         TextView txtTel;
         TextView txtEmail;
 
+        String item_edit;
+        String item_delete;
+
         public ViewHolder(@NonNull View itemView){
             super(itemView);
 
+            parent = itemView.findViewById(R.id.card_view);
             avatar = itemView.findViewById(R.id.avatar);
             txtName = itemView.findViewById(R.id.textName);
             txtNickName = itemView.findViewById(R.id.textNickName);
             txtTel = itemView.findViewById(R.id.textTelephone);
             txtEmail = itemView.findViewById(R.id.textEmail);
+            parent.setOnCreateContextMenuListener(this);
 
+            item_edit = itemView.getContext().getString(R.string.item_menu_edit_text);
+            item_delete = itemView.getContext().getString(R.string.item_menu_delete_text);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(this.getAdapterPosition(), ContactCtrl.ITEM_EDIT_ID, getAdapterPosition(), item_edit);
+            menu.add(this.getAdapterPosition(), ContactCtrl.ITEM_DELETE_ID, getAdapterPosition(), item_delete);
         }
     }
 }

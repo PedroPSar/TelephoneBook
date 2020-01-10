@@ -25,4 +25,8 @@
     <string name="label_tel">Telephone: </string>
     <string name="label_email">Email: </string>
 
+    <!-- floating menu -->
+    <string name="item_menu_edit_text">Edit contact</string>
+    <string name="item_menu_delete_text">Delete contact</string>
+
 </resources>

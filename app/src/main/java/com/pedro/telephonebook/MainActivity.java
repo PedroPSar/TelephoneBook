@@ -11,13 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.pedro.telephonebook.Control.ContactCtrl;
 import com.pedro.telephonebook.DataBase.ContactsDAO;
@@ -33,11 +31,15 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Contact> contacts;
     private ContactsDAO contactsDAO;
+    private ContactCtrl contactCtrl;
+    private RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        contactCtrl = new ContactCtrl();
 
         contactsDAO = new ContactsDAO(this);
 
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
             contacts = contactsDAO.loadContacts();
 
-            RecyclerViewAdapter adapter = new RecyclerViewAdapter(contacts, this);
+            adapter = new RecyclerViewAdapter(contacts, this);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(adapter);
@@ -89,4 +91,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        int clickedItemPosition = item.getOrder();
+
+        switch (item.getItemId()){
+
+            case 121:
+                Toast.makeText(this, "Item editado", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case 122:
+                contactCtrl.deleteContact(MainActivity.this, clickedItemPosition);
+                adapter.notifyItemRemoved(clickedItemPosition);
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+    }
 }
