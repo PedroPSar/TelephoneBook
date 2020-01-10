@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,7 +87,15 @@ public class AddContactActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.btn_save_contact:
-                contactCtrl.addContact(this, convertMediaUriToPath(filePath), editTextName, editTextNickName, editTextTel, editTextEmail);
+
+                String imgPath = "";
+
+                if(filePath == null){
+                    imgPath = Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + R.drawable.default_contact).toString();
+                }else{
+                    imgPath = convertMediaUriToPath(filePath);
+                }
+                contactCtrl.addContact(this, imgPath, editTextName, editTextNickName, editTextTel, editTextEmail);
                 finish();
                 break;
         }
