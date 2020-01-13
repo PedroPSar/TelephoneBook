@@ -35,6 +35,7 @@ public class AddContactActivity extends AppCompatActivity {
     private AppCompatEditText editTextEmail;
     private ImageView btnAddImg;
     private String formatedNumber = "";
+    private int textNumberLength;
 
     private static final int GET_IMAGE = 1;
     private Uri filePath;
@@ -84,10 +85,29 @@ public class AddContactActivity extends AppCompatActivity {
                    editTextTel.removeTextChangedListener(this);
 
                     //Format your string here...
-                   formatedNumber = contactCtrl.formatMobileNumber(editTextTel.getText().toString());
+                formatedNumber = editTextTel.getText().toString();
+                textNumberLength = editTextTel.getText().length();
 
-                   editTextTel.setText(formatedNumber);
-                   editTextTel.setSelection(formatedNumber.length());
+                if (formatedNumber.endsWith(" "))
+                    return;
+
+                if (textNumberLength == 1) {
+                    if (!formatedNumber.contains("(")) {
+                        editTextTel.setText(new StringBuilder(formatedNumber).insert(formatedNumber.length() - 1, "(").toString());
+                        editTextTel.setSelection(editTextTel.getText().length());
+                    }
+
+                } else if (textNumberLength == 4) {
+
+                    if (!formatedNumber.contains(")")) {
+                        editTextTel.setText(new StringBuilder(formatedNumber).insert(formatedNumber.length() - 1, ")").toString());
+                        editTextTel.setSelection(editTextTel.getText().length());
+                    }
+
+                } else if (textNumberLength == 5 || textNumberLength == 10) {
+                    editTextTel.setText(new StringBuilder(formatedNumber).insert(formatedNumber.length() - 1, " ").toString());
+                    editTextTel.setSelection(editTextTel.getText().length());
+                }
 
                    editTextTel.addTextChangedListener(this);
 

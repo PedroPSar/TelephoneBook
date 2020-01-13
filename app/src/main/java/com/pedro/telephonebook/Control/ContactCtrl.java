@@ -84,25 +84,6 @@ public class ContactCtrl {
         dao.updateContact(contact, currentContact);
     }
 
-    public String formatMobileNumber(String string){
-        String formated = "";
-
-        switch (string.length()){
-
-            case 1:
-                formated = "(" + string;
-                break;
-            case 3:
-                formated = string + ") ";
-                break;
-            case 10: formated = string + " - ";
-            break;
-            default: formated = string;
-        }
-
-        return formated;
-    }
-
     public boolean checkFormat(String string){
         boolean result = string.matches(REGULAR_TEL_NUMBER);
         return result;
