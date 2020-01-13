@@ -9,7 +9,7 @@
     <string name="toast_text_update_contact">Contact edited successfully</string>
     <string name="toast_text_update_error">An error occurred while updating the contact</string>
     <string name="toast_text_load_error">An error occurred while loading the contacts</string>
-    
+
     <!-- Add Contact Activity -->
     <string name="add_cont_title">New contact</string>
     <string name="hint_name">Name</string>

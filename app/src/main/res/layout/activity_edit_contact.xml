@@ -141,8 +141,8 @@
             android:id="@+id/edit_txt_tel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="17"
             android:digits="0123456789"
+            android:maxLength="17"
             android:inputType="numberDecimal"
             android:hint="@string/hint_tel"
             android:layout_marginEnd="@dimen/edit_txt_add_margin_end" />

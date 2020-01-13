@@ -3,27 +3,24 @@ package com.pedro.telephonebook;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.Toolbar;
-
 import com.pedro.telephonebook.Control.ContactCtrl;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AddContactActivity extends AppCompatActivity {
+public class EditContactActivity extends AppCompatActivity {
 
     private ContactCtrl contactCtrl;
 
@@ -34,7 +31,7 @@ public class AddContactActivity extends AppCompatActivity {
     private AppCompatEditText editTextTel;
     private AppCompatEditText editTextEmail;
     private ImageView btnAddImg;
-    private String formatedNumber = "";
+    private String imgPath = "";
 
     private static final int GET_IMAGE = 1;
     private Uri filePath;
@@ -42,7 +39,7 @@ public class AddContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_contact);
+        setContentView(R.layout.activity_edit_contact);
 
         contactCtrl = new ContactCtrl();
 
@@ -52,6 +49,8 @@ public class AddContactActivity extends AppCompatActivity {
         editTextTel = findViewById(R.id.edit_txt_tel);
         editTextEmail = findViewById(R.id.edit_txt_email);
         btnAddImg = findViewById(R.id.btnAddImg);
+
+        loadContentViews();
 
         toolbar = findViewById(R.id.toolbar_add_contact);
         setSupportActionBar(toolbar);
@@ -71,34 +70,6 @@ public class AddContactActivity extends AppCompatActivity {
                 showFileChooser();
             }
         });
-
-        editTextTel.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                   editTextTel.removeTextChangedListener(this);
-
-                    //Format your string here...
-                   formatedNumber = contactCtrl.formatMobileNumber(editTextTel.getText().toString());
-
-                   editTextTel.setText(formatedNumber);
-                   editTextTel.setSelection(formatedNumber.length());
-
-                   editTextTel.addTextChangedListener(this);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
     }
 
     @Override
@@ -116,14 +87,12 @@ public class AddContactActivity extends AppCompatActivity {
 
             case R.id.btn_save_contact:
 
-                String imgPath = "";
-
                 if(filePath == null){
-                    imgPath = Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + R.drawable.default_contact).toString();
+                    imgPath = ContactCtrl.currentContact.getAvatar();
                 }else{
                     imgPath = convertMediaUriToPath(filePath);
                 }
-                contactCtrl.addContact(this, imgPath, editTextName, editTextNickName, editTextTel, editTextEmail);
+                contactCtrl.updateContact(this, imgPath, editTextName, editTextNickName, editTextTel, editTextEmail);
                 finish();
                 break;
         }
@@ -153,7 +122,7 @@ public class AddContactActivity extends AppCompatActivity {
         }
     }
 
-    public String convertMediaUriToPath(Uri uri) {
+    private String convertMediaUriToPath(Uri uri) {
         String [] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(uri, proj,  null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -163,4 +132,13 @@ public class AddContactActivity extends AppCompatActivity {
         return path;
     }
 
+    private void loadContentViews(){
+
+        circleImg.setImageURI(Uri.parse(ContactCtrl.currentContact.getAvatar()));
+        editTextName.setText(ContactCtrl.currentContact.getName());
+        editTextNickName.setText(ContactCtrl.currentContact.getNickname());
+        editTextTel.setText(ContactCtrl.currentContact.getTel());
+        editTextEmail.setText(ContactCtrl.currentContact.getEmail());
+
+    }
 }

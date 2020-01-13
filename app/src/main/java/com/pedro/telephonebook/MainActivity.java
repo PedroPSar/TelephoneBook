@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case 121:
-                Toast.makeText(this, "Item editado", Toast.LENGTH_SHORT).show();
+                contactCtrl.editContact(this, clickedItemPosition);
                 return true;
 
             case 122:
