@@ -18,6 +18,8 @@
     <string name="hint_nickname">Nickname</string>
     <string name="hint_tel">Phone</string>
     <string name="hint_email">Email</string>
+    <string name="text_toast_number_invalid">Invalid phone number</string>
+    <string name="text_toast_email_invalid">Invalid email</string>
 
     <!-- recyclerView Layout -->
     <string name="label_name">Name: </string>

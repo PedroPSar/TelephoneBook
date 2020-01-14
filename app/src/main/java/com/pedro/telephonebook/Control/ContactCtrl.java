@@ -2,6 +2,7 @@ package com.pedro.telephonebook.Control;
 
 import android.content.Context;
 import android.content.Intent;
+import android.telephony.PhoneNumberUtils;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import com.pedro.telephonebook.DataBase.ContactsDAO;
@@ -15,7 +16,7 @@ public class ContactCtrl {
     public static final int ITEM_EDIT_ID = 121;
     public static final int ITEM_DELETE_ID = 122;
     public static Contact currentContact;
-    private static final String REGULAR_TEL_NUMBER = "\\([1-9]\\d\\)\\s9?\\d{4}-\\d{4}";
+    private static final String REGULAR_TEL_NUMBER = "\\([1-9]\\d\\)\\s9\\d{4}\\s-\\s\\d{4}";
 
     public void addContact(Context context, String avatar, AppCompatEditText name, AppCompatEditText nickName, AppCompatEditText tel, AppCompatEditText email){
         ContactsDAO dao = new ContactsDAO(context);
@@ -84,9 +85,50 @@ public class ContactCtrl {
         dao.updateContact(contact, currentContact);
     }
 
-    public boolean checkFormat(String string){
-        boolean result = string.matches(REGULAR_TEL_NUMBER);
-        return result;
+    public boolean checkFormat(String number){
+        return number.matches(REGULAR_TEL_NUMBER);
+    }
+
+    public boolean checkEmailFormat(String email){
+        return email.contains("@");
+    }
+
+    public String formatMobileNumber(String string){
+
+        String formatted = "";
+
+        if(string != ""){
+
+            if(string.length() == 1 && !string.contains("(")){
+                formatted = "(" + string;
+
+            }else if(string.length() == 3 && !string.contains(")")){
+                formatted = string + ") ";
+
+            }else if(string.length() == 10){
+                formatted = string + " - ";
+
+            }else if(string.length() == 5 && string.contains(")")){
+                formatted = string.substring(0, 4) + " " + string.substring(4);
+
+            }else if(string.length() == 4 && !string.contains(")")){
+                formatted = string.substring(0, 3) + ") " + string.substring(3);
+
+            }else if(string.length() == 11 && !string.contains(" - ")){
+                formatted = string.substring(0, 10) + " - " + string.substring(10);
+
+            }else if(string.length() == 12 && !string.contains("-")){
+                formatted = string.substring(0, 10) + " - " + string.substring(11);
+
+            }else if(string.length() == 13 && !string.contains("- ")){
+                formatted = string.substring(0, 12) + " " + string.substring(12);
+
+            }else{
+                formatted = string;
+            }
+
+        }
+        return formatted;
     }
 
 }

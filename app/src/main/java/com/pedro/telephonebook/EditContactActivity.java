@@ -11,10 +11,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.pedro.telephonebook.Control.ContactCtrl;
 
@@ -32,6 +35,8 @@ public class EditContactActivity extends AppCompatActivity {
     private AppCompatEditText editTextEmail;
     private ImageView btnAddImg;
     private String imgPath = "";
+    private String formattedNumber = "";
+    private int previousLength;
 
     private static final int GET_IMAGE = 1;
     private Uri filePath;
@@ -70,6 +75,34 @@ public class EditContactActivity extends AppCompatActivity {
                 showFileChooser();
             }
         });
+
+        editTextTel.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                previousLength = s.length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                editTextTel.removeTextChangedListener(this);
+
+                if(previousLength <= s.length()){
+                    //Format your string here...
+                    formattedNumber = contactCtrl.formatMobileNumber(editTextTel.getText().toString());
+                    editTextTel.setText(formattedNumber);
+                    editTextTel.setSelection(editTextTel.getText().length());
+                }
+
+                editTextTel.addTextChangedListener(this);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -87,14 +120,28 @@ public class EditContactActivity extends AppCompatActivity {
 
             case R.id.btn_save_contact:
 
-                if(filePath == null){
-                    imgPath = ContactCtrl.currentContact.getAvatar();
+                if(contactCtrl.checkFormat(editTextTel.getText().toString())){
+
+                    if(contactCtrl.checkEmailFormat(editTextEmail.getText().toString())){
+
+                        if(filePath == null){
+                            imgPath = ContactCtrl.currentContact.getAvatar();
+                        }else{
+                            imgPath = convertMediaUriToPath(filePath);
+                        }
+                        contactCtrl.updateContact(this, imgPath, editTextName, editTextNickName, editTextTel, editTextEmail);
+                        finish();
+                        break;
+
+                    }else{
+                        Toast.makeText(this, getString(R.string.text_toast_email_invalid), Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+
                 }else{
-                    imgPath = convertMediaUriToPath(filePath);
+                    Toast.makeText(this, getString(R.string.text_toast_number_invalid), Toast.LENGTH_SHORT).show();
+                    break;
                 }
-                contactCtrl.updateContact(this, imgPath, editTextName, editTextNickName, editTextTel, editTextEmail);
-                finish();
-                break;
         }
 
         return super.onOptionsItemSelected(item);

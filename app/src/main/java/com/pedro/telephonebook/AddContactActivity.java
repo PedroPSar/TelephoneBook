@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
@@ -34,8 +35,8 @@ public class AddContactActivity extends AppCompatActivity {
     private AppCompatEditText editTextTel;
     private AppCompatEditText editTextEmail;
     private ImageView btnAddImg;
-    private String formatedNumber = "";
-    private int textNumberLength;
+    private String formattedNumber = "";
+    private int previousLength;
 
     private static final int GET_IMAGE = 1;
     private Uri filePath;
@@ -76,40 +77,22 @@ public class AddContactActivity extends AppCompatActivity {
         editTextTel.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                previousLength = s.length();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                   editTextTel.removeTextChangedListener(this);
+                editTextTel.removeTextChangedListener(this);
 
+                if(previousLength <= s.length()){
                     //Format your string here...
-                formatedNumber = editTextTel.getText().toString();
-                textNumberLength = editTextTel.getText().length();
-
-                if (formatedNumber.endsWith(" "))
-                    return;
-
-                if (textNumberLength == 1) {
-                    if (!formatedNumber.contains("(")) {
-                        editTextTel.setText(new StringBuilder(formatedNumber).insert(formatedNumber.length() - 1, "(").toString());
-                        editTextTel.setSelection(editTextTel.getText().length());
-                    }
-
-                } else if (textNumberLength == 4) {
-
-                    if (!formatedNumber.contains(")")) {
-                        editTextTel.setText(new StringBuilder(formatedNumber).insert(formatedNumber.length() - 1, ")").toString());
-                        editTextTel.setSelection(editTextTel.getText().length());
-                    }
-
-                } else if (textNumberLength == 5 || textNumberLength == 10) {
-                    editTextTel.setText(new StringBuilder(formatedNumber).insert(formatedNumber.length() - 1, " ").toString());
+                    formattedNumber = contactCtrl.formatMobileNumber(editTextTel.getText().toString());
+                    editTextTel.setText(formattedNumber);
                     editTextTel.setSelection(editTextTel.getText().length());
                 }
 
-                   editTextTel.addTextChangedListener(this);
+                editTextTel.addTextChangedListener(this);
 
             }
 
@@ -136,16 +119,31 @@ public class AddContactActivity extends AppCompatActivity {
 
             case R.id.btn_save_contact:
 
-                String imgPath = "";
+                if(contactCtrl.checkFormat(editTextTel.getText().toString())){
 
-                if(filePath == null){
-                    imgPath = Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + R.drawable.default_contact).toString();
+                    if(contactCtrl.checkEmailFormat(editTextEmail.getText().toString())){
+
+                        String imgPath = "";
+
+                        if(filePath == null){
+                            imgPath = Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + R.drawable.default_contact).toString();
+                        }else{
+                            imgPath = convertMediaUriToPath(filePath);
+                        }
+                        contactCtrl.addContact(this, imgPath, editTextName, editTextNickName, editTextTel, editTextEmail);
+                        finish();
+                        break;
+
+                    }else{
+                        Toast.makeText(this, getString(R.string.text_toast_email_invalid), Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+
                 }else{
-                    imgPath = convertMediaUriToPath(filePath);
+                    Toast.makeText(this, getString(R.string.text_toast_number_invalid), Toast.LENGTH_SHORT).show();
+                    break;
                 }
-                contactCtrl.addContact(this, imgPath, editTextName, editTextNickName, editTextTel, editTextEmail);
-                finish();
-                break;
+
         }
 
         return super.onOptionsItemSelected(item);
